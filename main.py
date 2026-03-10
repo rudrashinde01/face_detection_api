@@ -1,12 +1,18 @@
-from fastapi import FastAPI, UploadFile
+from fastapi import FastAPI, UploadFile, File
 import numpy as np
 import cv2
 from face_detect import detect_face
 
 app = FastAPI()
 
+
+@app.get("/")
+def home():
+    return {"message": "Face Detection API Running"}
+    
+
 @app.post("/detect-face")
-async def detect(file: UploadFile):
+async def detect(file: UploadFile = File(...)):
 
     contents = await file.read()
 
